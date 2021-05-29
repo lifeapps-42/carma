@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "210856088213",
+    "project_id": "carma-45f5d",
+    "storage_bucket": "carma-45f5d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210856088213:android:a1a7811aa8e4c89bde019c",
+        "android_client_info": {
+          "package_name": "ru.carma.carma"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210856088213-1unuroi8a7jvl80biq3hfi08d6ukteon.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.carma.carma",
+            "certificate_hash": "031990188880ef595b51a98bd48281f8e48bb4d2"
+          }
+        },
+        {
+          "client_id": "210856088213-bdl5l95psm0fukihf46bhk588n0df1j4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxBm0d9R_G8iRv8hLHLQ5DAlF3y6-Nh_I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210856088213-bdl5l95psm0fukihf46bhk588n0df1j4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
