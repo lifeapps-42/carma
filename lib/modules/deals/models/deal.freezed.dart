@@ -20,10 +20,20 @@ Deal _$DealFromJson(Map<String, dynamic> json) {
 class _$DealTearOff {
   const _$DealTearOff();
 
-  _Deal call({double fullCost = 0, required String description}) {
+  _Deal call(
+      {String? id,
+      double fullCost = 0,
+      String? name = 'noname',
+      List<Work>? works,
+      required String description,
+      String? vehicle}) {
     return _Deal(
+      id: id,
       fullCost: fullCost,
+      name: name,
+      works: works,
       description: description,
+      vehicle: vehicle,
     );
   }
 
@@ -37,8 +47,12 @@ const $Deal = _$DealTearOff();
 
 /// @nodoc
 mixin _$Deal {
+  String? get id => throw _privateConstructorUsedError;
   double get fullCost => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  List<Work>? get works => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
+  String? get vehicle => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,7 +63,13 @@ mixin _$Deal {
 abstract class $DealCopyWith<$Res> {
   factory $DealCopyWith(Deal value, $Res Function(Deal) then) =
       _$DealCopyWithImpl<$Res>;
-  $Res call({double fullCost, String description});
+  $Res call(
+      {String? id,
+      double fullCost,
+      String? name,
+      List<Work>? works,
+      String description,
+      String? vehicle});
 }
 
 /// @nodoc
@@ -62,18 +82,38 @@ class _$DealCopyWithImpl<$Res> implements $DealCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? fullCost = freezed,
+    Object? name = freezed,
+    Object? works = freezed,
     Object? description = freezed,
+    Object? vehicle = freezed,
   }) {
     return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       fullCost: fullCost == freezed
           ? _value.fullCost
           : fullCost // ignore: cast_nullable_to_non_nullable
               as double,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      works: works == freezed
+          ? _value.works
+          : works // ignore: cast_nullable_to_non_nullable
+              as List<Work>?,
       description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      vehicle: vehicle == freezed
+          ? _value.vehicle
+          : vehicle // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -83,7 +123,13 @@ abstract class _$DealCopyWith<$Res> implements $DealCopyWith<$Res> {
   factory _$DealCopyWith(_Deal value, $Res Function(_Deal) then) =
       __$DealCopyWithImpl<$Res>;
   @override
-  $Res call({double fullCost, String description});
+  $Res call(
+      {String? id,
+      double fullCost,
+      String? name,
+      List<Work>? works,
+      String description,
+      String? vehicle});
 }
 
 /// @nodoc
@@ -97,18 +143,38 @@ class __$DealCopyWithImpl<$Res> extends _$DealCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? fullCost = freezed,
+    Object? name = freezed,
+    Object? works = freezed,
     Object? description = freezed,
+    Object? vehicle = freezed,
   }) {
     return _then(_Deal(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       fullCost: fullCost == freezed
           ? _value.fullCost
           : fullCost // ignore: cast_nullable_to_non_nullable
               as double,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      works: works == freezed
+          ? _value.works
+          : works // ignore: cast_nullable_to_non_nullable
+              as List<Work>?,
       description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      vehicle: vehicle == freezed
+          ? _value.vehicle
+          : vehicle // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -116,39 +182,66 @@ class __$DealCopyWithImpl<$Res> extends _$DealCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Deal implements _Deal {
-  const _$_Deal({this.fullCost = 0, required this.description});
+  const _$_Deal(
+      {this.id,
+      this.fullCost = 0,
+      this.name = 'noname',
+      this.works,
+      required this.description,
+      this.vehicle});
 
   factory _$_Deal.fromJson(Map<String, dynamic> json) =>
       _$_$_DealFromJson(json);
 
+  @override
+  final String? id;
   @JsonKey(defaultValue: 0)
   @override
   final double fullCost;
+  @JsonKey(defaultValue: 'noname')
+  @override
+  final String? name;
+  @override
+  final List<Work>? works;
   @override
   final String description;
+  @override
+  final String? vehicle;
 
   @override
   String toString() {
-    return 'Deal(fullCost: $fullCost, description: $description)';
+    return 'Deal(id: $id, fullCost: $fullCost, name: $name, works: $works, description: $description, vehicle: $vehicle)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Deal &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.fullCost, fullCost) ||
                 const DeepCollectionEquality()
                     .equals(other.fullCost, fullCost)) &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.works, works) ||
+                const DeepCollectionEquality().equals(other.works, works)) &&
             (identical(other.description, description) ||
                 const DeepCollectionEquality()
-                    .equals(other.description, description)));
+                    .equals(other.description, description)) &&
+            (identical(other.vehicle, vehicle) ||
+                const DeepCollectionEquality().equals(other.vehicle, vehicle)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(fullCost) ^
-      const DeepCollectionEquality().hash(description);
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(works) ^
+      const DeepCollectionEquality().hash(description) ^
+      const DeepCollectionEquality().hash(vehicle);
 
   @JsonKey(ignore: true)
   @override
@@ -162,14 +255,28 @@ class _$_Deal implements _Deal {
 }
 
 abstract class _Deal implements Deal {
-  const factory _Deal({double fullCost, required String description}) = _$_Deal;
+  const factory _Deal(
+      {String? id,
+      double fullCost,
+      String? name,
+      List<Work>? works,
+      required String description,
+      String? vehicle}) = _$_Deal;
 
   factory _Deal.fromJson(Map<String, dynamic> json) = _$_Deal.fromJson;
 
   @override
+  String? get id => throw _privateConstructorUsedError;
+  @override
   double get fullCost => throw _privateConstructorUsedError;
   @override
+  String? get name => throw _privateConstructorUsedError;
+  @override
+  List<Work>? get works => throw _privateConstructorUsedError;
+  @override
   String get description => throw _privateConstructorUsedError;
+  @override
+  String? get vehicle => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$DealCopyWith<_Deal> get copyWith => throw _privateConstructorUsedError;

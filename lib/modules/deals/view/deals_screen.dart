@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers/deals_provider.dart';
 import '../models/deal.dart';
+import 'deal_tile.dart';
 
 class DealsScreen extends StatelessWidget {
   @override
@@ -21,10 +22,12 @@ class DealsScreen extends StatelessWidget {
                     child: Text('Ничего нет'),
                   );
                 } else {
-                  return ListView.builder(
+                  return ListView.separated(
+                    separatorBuilder: (context, _) => SizedBox(height: 10,),
                       itemCount: deals.length,
-                      itemBuilder: (context, i) =>
-                          Text('${deals[i].description}'));
+                      itemBuilder: (context, i) => ProviderScope(overrides: [
+                            currentDealProvider.overrideWithValue(deals[i])
+                          ], child: const DealTile()));
                 }
               },
               loading: () => Center(
@@ -38,12 +41,10 @@ class DealsScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () async {
-            final description = await showDialog<String?>(
+            final deal = await showDialog<Deal?>(
                 context: context, builder: (context) => NewDealDialog());
-            if (description != null) {
-              context
-                  .read(dealsProvider.notifier)
-                  .add(Deal(description: description));
+            if (deal != null) {
+              context.read(dealsProvider.notifier).add(deal);
             }
           }),
     );
@@ -60,17 +61,23 @@ class NewDealDialog extends StatefulWidget {
 }
 
 class _NewDealDialogState extends State<NewDealDialog> {
-  late TextEditingController _controller;
+  late TextEditingController _descriptionController;
+  late TextEditingController _vehicleController;
+  late TextEditingController _priceCpntroller;
 
   @override
   void initState() {
-    _controller = TextEditingController();
+    _descriptionController = TextEditingController();
+    _vehicleController = TextEditingController();
+    _priceCpntroller = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _descriptionController.dispose();
+    _vehicleController.dispose();
+    _priceCpntroller.dispose();
     super.dispose();
   }
 
@@ -78,10 +85,21 @@ class _NewDealDialogState extends State<NewDealDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       content: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Text('Deal Description'),
+          Text('Автомобиль'),
           TextField(
-            controller: _controller,
+            controller: _vehicleController,
+            autofocus: true,
+          ),
+          Text('Что делаем?'),
+          TextField(
+            controller: _descriptionController,
+            autofocus: true,
+          ),
+          Text('Цена за всё'),
+          TextField(
+            controller: _priceCpntroller,
             autofocus: true,
           ),
         ],
@@ -89,7 +107,14 @@ class _NewDealDialogState extends State<NewDealDialog> {
       actions: [
         TextButton(
           child: Text('OK'),
-          onPressed: () => Navigator.pop(context, _controller.text),
+          onPressed: () => Navigator.pop(
+              context,
+              Deal(
+                  description: _descriptionController.text,
+                  vehicle: _vehicleController.text,
+                  fullCost: double.tryParse(_priceCpntroller.text.isNotEmpty
+                      ? _priceCpntroller.text
+                      : '0')!)),
         )
       ],
     );
