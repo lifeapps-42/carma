@@ -26,7 +26,16 @@ class _MyAppState extends State<MyApp> {
               return MaterialApp(
                 title: 'carma',
                 theme: ThemeData(
-                  primarySwatch: Colors.blue,
+                
+                  cardTheme: CardTheme(
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shadowColor: Colors.blueGrey[50],
+                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    elevation: 0,
+                  ),
+                  scaffoldBackgroundColor: Colors.blueGrey[50],
+                  primarySwatch: Colors.blueGrey,
                 ),
                 home: DealsScreen(),
               );

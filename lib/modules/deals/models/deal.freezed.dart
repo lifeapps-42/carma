@@ -22,17 +22,25 @@ class _$DealTearOff {
 
   _Deal call(
       {String? id,
-      double fullCost = 0,
       String? name = 'noname',
-      List<Work>? works,
+      @JsonSerializable() List<Work> works = const [],
+      @JsonSerializable() List<DirectCost> directCosts = const [],
       required String description,
+      DealStatus status = DealStatus.prospect,
+      num? discount,
+      String? clientsName,
+      String? clintsPhone,
       String? vehicle}) {
     return _Deal(
       id: id,
-      fullCost: fullCost,
       name: name,
       works: works,
+      directCosts: directCosts,
       description: description,
+      status: status,
+      discount: discount,
+      clientsName: clientsName,
+      clintsPhone: clintsPhone,
       vehicle: vehicle,
     );
   }
@@ -48,10 +56,16 @@ const $Deal = _$DealTearOff();
 /// @nodoc
 mixin _$Deal {
   String? get id => throw _privateConstructorUsedError;
-  double get fullCost => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
-  List<Work>? get works => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
+  @JsonSerializable()
+  List<Work> get works => throw _privateConstructorUsedError;
+  @JsonSerializable()
+  List<DirectCost> get directCosts => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError; //enum
+  DealStatus get status => throw _privateConstructorUsedError;
+  num? get discount => throw _privateConstructorUsedError;
+  String? get clientsName => throw _privateConstructorUsedError;
+  String? get clintsPhone => throw _privateConstructorUsedError;
   String? get vehicle => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -65,10 +79,14 @@ abstract class $DealCopyWith<$Res> {
       _$DealCopyWithImpl<$Res>;
   $Res call(
       {String? id,
-      double fullCost,
       String? name,
-      List<Work>? works,
+      @JsonSerializable() List<Work> works,
+      @JsonSerializable() List<DirectCost> directCosts,
       String description,
+      DealStatus status,
+      num? discount,
+      String? clientsName,
+      String? clintsPhone,
       String? vehicle});
 }
 
@@ -83,10 +101,14 @@ class _$DealCopyWithImpl<$Res> implements $DealCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
-    Object? fullCost = freezed,
     Object? name = freezed,
     Object? works = freezed,
+    Object? directCosts = freezed,
     Object? description = freezed,
+    Object? status = freezed,
+    Object? discount = freezed,
+    Object? clientsName = freezed,
+    Object? clintsPhone = freezed,
     Object? vehicle = freezed,
   }) {
     return _then(_value.copyWith(
@@ -94,10 +116,6 @@ class _$DealCopyWithImpl<$Res> implements $DealCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      fullCost: fullCost == freezed
-          ? _value.fullCost
-          : fullCost // ignore: cast_nullable_to_non_nullable
-              as double,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -105,11 +123,31 @@ class _$DealCopyWithImpl<$Res> implements $DealCopyWith<$Res> {
       works: works == freezed
           ? _value.works
           : works // ignore: cast_nullable_to_non_nullable
-              as List<Work>?,
+              as List<Work>,
+      directCosts: directCosts == freezed
+          ? _value.directCosts
+          : directCosts // ignore: cast_nullable_to_non_nullable
+              as List<DirectCost>,
       description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as DealStatus,
+      discount: discount == freezed
+          ? _value.discount
+          : discount // ignore: cast_nullable_to_non_nullable
+              as num?,
+      clientsName: clientsName == freezed
+          ? _value.clientsName
+          : clientsName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      clintsPhone: clintsPhone == freezed
+          ? _value.clintsPhone
+          : clintsPhone // ignore: cast_nullable_to_non_nullable
+              as String?,
       vehicle: vehicle == freezed
           ? _value.vehicle
           : vehicle // ignore: cast_nullable_to_non_nullable
@@ -125,10 +163,14 @@ abstract class _$DealCopyWith<$Res> implements $DealCopyWith<$Res> {
   @override
   $Res call(
       {String? id,
-      double fullCost,
       String? name,
-      List<Work>? works,
+      @JsonSerializable() List<Work> works,
+      @JsonSerializable() List<DirectCost> directCosts,
       String description,
+      DealStatus status,
+      num? discount,
+      String? clientsName,
+      String? clintsPhone,
       String? vehicle});
 }
 
@@ -144,10 +186,14 @@ class __$DealCopyWithImpl<$Res> extends _$DealCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? fullCost = freezed,
     Object? name = freezed,
     Object? works = freezed,
+    Object? directCosts = freezed,
     Object? description = freezed,
+    Object? status = freezed,
+    Object? discount = freezed,
+    Object? clientsName = freezed,
+    Object? clintsPhone = freezed,
     Object? vehicle = freezed,
   }) {
     return _then(_Deal(
@@ -155,10 +201,6 @@ class __$DealCopyWithImpl<$Res> extends _$DealCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      fullCost: fullCost == freezed
-          ? _value.fullCost
-          : fullCost // ignore: cast_nullable_to_non_nullable
-              as double,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -166,11 +208,31 @@ class __$DealCopyWithImpl<$Res> extends _$DealCopyWithImpl<$Res>
       works: works == freezed
           ? _value.works
           : works // ignore: cast_nullable_to_non_nullable
-              as List<Work>?,
+              as List<Work>,
+      directCosts: directCosts == freezed
+          ? _value.directCosts
+          : directCosts // ignore: cast_nullable_to_non_nullable
+              as List<DirectCost>,
       description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as DealStatus,
+      discount: discount == freezed
+          ? _value.discount
+          : discount // ignore: cast_nullable_to_non_nullable
+              as num?,
+      clientsName: clientsName == freezed
+          ? _value.clientsName
+          : clientsName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      clintsPhone: clintsPhone == freezed
+          ? _value.clintsPhone
+          : clintsPhone // ignore: cast_nullable_to_non_nullable
+              as String?,
       vehicle: vehicle == freezed
           ? _value.vehicle
           : vehicle // ignore: cast_nullable_to_non_nullable
@@ -181,36 +243,53 @@ class __$DealCopyWithImpl<$Res> extends _$DealCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Deal implements _Deal {
+class _$_Deal extends _Deal {
   const _$_Deal(
       {this.id,
-      this.fullCost = 0,
       this.name = 'noname',
-      this.works,
+      @JsonSerializable() this.works = const [],
+      @JsonSerializable() this.directCosts = const [],
       required this.description,
-      this.vehicle});
+      this.status = DealStatus.prospect,
+      this.discount,
+      this.clientsName,
+      this.clintsPhone,
+      this.vehicle})
+      : super._();
 
   factory _$_Deal.fromJson(Map<String, dynamic> json) =>
       _$_$_DealFromJson(json);
 
   @override
   final String? id;
-  @JsonKey(defaultValue: 0)
-  @override
-  final double fullCost;
   @JsonKey(defaultValue: 'noname')
   @override
   final String? name;
+  @JsonKey(defaultValue: const [])
   @override
-  final List<Work>? works;
+  @JsonSerializable()
+  final List<Work> works;
+  @JsonKey(defaultValue: const [])
+  @override
+  @JsonSerializable()
+  final List<DirectCost> directCosts;
   @override
   final String description;
+  @JsonKey(defaultValue: DealStatus.prospect)
+  @override //enum
+  final DealStatus status;
+  @override
+  final num? discount;
+  @override
+  final String? clientsName;
+  @override
+  final String? clintsPhone;
   @override
   final String? vehicle;
 
   @override
   String toString() {
-    return 'Deal(id: $id, fullCost: $fullCost, name: $name, works: $works, description: $description, vehicle: $vehicle)';
+    return 'Deal(id: $id, name: $name, works: $works, directCosts: $directCosts, description: $description, status: $status, discount: $discount, clientsName: $clientsName, clintsPhone: $clintsPhone, vehicle: $vehicle)';
   }
 
   @override
@@ -219,16 +298,27 @@ class _$_Deal implements _Deal {
         (other is _Deal &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.fullCost, fullCost) ||
-                const DeepCollectionEquality()
-                    .equals(other.fullCost, fullCost)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.works, works) ||
                 const DeepCollectionEquality().equals(other.works, works)) &&
+            (identical(other.directCosts, directCosts) ||
+                const DeepCollectionEquality()
+                    .equals(other.directCosts, directCosts)) &&
             (identical(other.description, description) ||
                 const DeepCollectionEquality()
                     .equals(other.description, description)) &&
+            (identical(other.status, status) ||
+                const DeepCollectionEquality().equals(other.status, status)) &&
+            (identical(other.discount, discount) ||
+                const DeepCollectionEquality()
+                    .equals(other.discount, discount)) &&
+            (identical(other.clientsName, clientsName) ||
+                const DeepCollectionEquality()
+                    .equals(other.clientsName, clientsName)) &&
+            (identical(other.clintsPhone, clintsPhone) ||
+                const DeepCollectionEquality()
+                    .equals(other.clintsPhone, clintsPhone)) &&
             (identical(other.vehicle, vehicle) ||
                 const DeepCollectionEquality().equals(other.vehicle, vehicle)));
   }
@@ -237,10 +327,14 @@ class _$_Deal implements _Deal {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(fullCost) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(works) ^
+      const DeepCollectionEquality().hash(directCosts) ^
       const DeepCollectionEquality().hash(description) ^
+      const DeepCollectionEquality().hash(status) ^
+      const DeepCollectionEquality().hash(discount) ^
+      const DeepCollectionEquality().hash(clientsName) ^
+      const DeepCollectionEquality().hash(clintsPhone) ^
       const DeepCollectionEquality().hash(vehicle);
 
   @JsonKey(ignore: true)
@@ -254,27 +348,42 @@ class _$_Deal implements _Deal {
   }
 }
 
-abstract class _Deal implements Deal {
+abstract class _Deal extends Deal {
   const factory _Deal(
       {String? id,
-      double fullCost,
       String? name,
-      List<Work>? works,
+      @JsonSerializable() List<Work> works,
+      @JsonSerializable() List<DirectCost> directCosts,
       required String description,
+      DealStatus status,
+      num? discount,
+      String? clientsName,
+      String? clintsPhone,
       String? vehicle}) = _$_Deal;
+  const _Deal._() : super._();
 
   factory _Deal.fromJson(Map<String, dynamic> json) = _$_Deal.fromJson;
 
   @override
   String? get id => throw _privateConstructorUsedError;
   @override
-  double get fullCost => throw _privateConstructorUsedError;
-  @override
   String? get name => throw _privateConstructorUsedError;
   @override
-  List<Work>? get works => throw _privateConstructorUsedError;
+  @JsonSerializable()
+  List<Work> get works => throw _privateConstructorUsedError;
+  @override
+  @JsonSerializable()
+  List<DirectCost> get directCosts => throw _privateConstructorUsedError;
   @override
   String get description => throw _privateConstructorUsedError;
+  @override //enum
+  DealStatus get status => throw _privateConstructorUsedError;
+  @override
+  num? get discount => throw _privateConstructorUsedError;
+  @override
+  String? get clientsName => throw _privateConstructorUsedError;
+  @override
+  String? get clintsPhone => throw _privateConstructorUsedError;
   @override
   String? get vehicle => throw _privateConstructorUsedError;
   @override

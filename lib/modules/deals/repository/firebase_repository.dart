@@ -5,15 +5,19 @@ import '../models/deal.dart';
 class DealsFirebaseRepository {
   final ref = FirebaseFirestore.instance.collection('deals');
 
-  Map<String, dynamic>
-      _fbJson<T extends DocumentSnapshot<Map<String, dynamic>>>(T snapShop) {
+ Map<String, dynamic>
+      _fbJson<T extends DocumentSnapshot<Map<String, dynamic>>>(T snapShop)  {
+        
     return snapShop.data()!..addAll({'id': snapShop.id});
   }
 
   Future<List<Deal>> fetch() async {
     final querySnap = await ref.get();
     final snap = querySnap.docs;
-    final result = snap.map((e) => Deal.fromJson(_fbJson(e))).toList();
+    final result = snap.map((e) {
+     
+      return Deal.fromJson( _fbJson(e));
+    }).toList();
     return result;
   }
 
@@ -21,5 +25,10 @@ class DealsFirebaseRepository {
     final docRef = await ref.add(deal.toJson());
     final docSnap = await docRef.get();
     return Deal.fromJson(_fbJson(docSnap));
+  }
+
+  Future<void> edit(Deal deal) async {
+    final docRef = ref.doc(deal.id);
+    return docRef.set(deal.toJson());
   }
 }

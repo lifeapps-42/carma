@@ -32,4 +32,16 @@ class DealsNotifier extends StateNotifier<AsyncValue<List<Deal>>> {
     state = state.whenData((deals) => deals..add(newDeal));
     print('--New deal added: $newDeal');
   }
+
+  void edit(Deal deal) async {
+    await read(dealsRepositoryProvider).edit(deal);
+    final newState = state.whenData((deals) {
+      return [
+        for (final Deal _deal in deals)
+          if (_deal.id == deal.id) deal else _deal
+      ];
+    });
+    state = newState;
+    print(state == newState);
+  }
 }
