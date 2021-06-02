@@ -29,7 +29,10 @@ class DealsNotifier extends StateNotifier<AsyncValue<List<Deal>>> {
 
   Future<void> add(Deal deal) async {
     final newDeal = await read(dealsRepositoryProvider).add(deal);
-    state = state.whenData((deals) => deals..add(newDeal));
+    state = state.whenData((deals) => deals
+      ..add(newDeal)
+      ..sort((a, b) => (b.createdAt ?? DateTime(1900))
+          .compareTo(a.createdAt ?? DateTime(1900))));
     print('--New deal added: $newDeal');
   }
 

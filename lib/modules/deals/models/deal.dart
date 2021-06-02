@@ -29,11 +29,15 @@ abstract class Deal with _$Deal {
       num? discount,
       String? clientsName,
       String? clintsPhone,
+      DateTime? createdAt,
       String? vehicle}) = _Deal;
   
   factory Deal.fromJson(Map<String, dynamic> json) => _$DealFromJson(json);
 
   double get fullCost =>
       works.fold<double>(0, (previousValue, work) => previousValue + work.price)/100.0*(100.0 - (discount?? 0));
+  
+  double get fullDirectCost =>
+      directCosts.fold<double>(0, (previousValue, cost) => previousValue + cost.price);
 
 }

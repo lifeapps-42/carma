@@ -5,6 +5,7 @@ import '../models/deal.dart';
 import '../providers/deals_provider.dart';
 import 'deal_edit_screen.dart';
 import 'status_tag.dart';
+import '../../../common/widgets/date_tag.dart';
 import '../../../common/widgets/price_tag.dart';
 
 class DealTile extends ConsumerWidget {
@@ -36,6 +37,8 @@ class DealTile extends ConsumerWidget {
                 Divider(),
                 Row(children: [
                   StatusTag(deal: deal),
+                  SizedBox(width: 10,),
+                  DateTag(date: deal.createdAt,),
                   Spacer(),
                   PriceTag(
                     price: deal.fullCost,

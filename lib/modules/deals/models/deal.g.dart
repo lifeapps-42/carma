@@ -24,6 +24,9 @@ _$_Deal _$_$_DealFromJson(Map<String, dynamic> json) {
     discount: json['discount'] as num?,
     clientsName: json['clientsName'] as String?,
     clintsPhone: json['clintsPhone'] as String?,
+    createdAt: json['createdAt'] == null
+        ? null
+        : DateTime.parse(json['createdAt'] as String),
     vehicle: json['vehicle'] as String?,
   );
 }
@@ -38,6 +41,7 @@ Map<String, dynamic> _$_$_DealToJson(_$_Deal instance) => <String, dynamic>{
       'discount': instance.discount,
       'clientsName': instance.clientsName,
       'clintsPhone': instance.clintsPhone,
+      'createdAt': instance.createdAt?.toIso8601String(),
       'vehicle': instance.vehicle,
     };
 

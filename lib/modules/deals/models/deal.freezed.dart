@@ -30,6 +30,7 @@ class _$DealTearOff {
       num? discount,
       String? clientsName,
       String? clintsPhone,
+      DateTime? createdAt,
       String? vehicle}) {
     return _Deal(
       id: id,
@@ -41,6 +42,7 @@ class _$DealTearOff {
       discount: discount,
       clientsName: clientsName,
       clintsPhone: clintsPhone,
+      createdAt: createdAt,
       vehicle: vehicle,
     );
   }
@@ -66,6 +68,7 @@ mixin _$Deal {
   num? get discount => throw _privateConstructorUsedError;
   String? get clientsName => throw _privateConstructorUsedError;
   String? get clintsPhone => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   String? get vehicle => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -87,6 +90,7 @@ abstract class $DealCopyWith<$Res> {
       num? discount,
       String? clientsName,
       String? clintsPhone,
+      DateTime? createdAt,
       String? vehicle});
 }
 
@@ -109,6 +113,7 @@ class _$DealCopyWithImpl<$Res> implements $DealCopyWith<$Res> {
     Object? discount = freezed,
     Object? clientsName = freezed,
     Object? clintsPhone = freezed,
+    Object? createdAt = freezed,
     Object? vehicle = freezed,
   }) {
     return _then(_value.copyWith(
@@ -148,6 +153,10 @@ class _$DealCopyWithImpl<$Res> implements $DealCopyWith<$Res> {
           ? _value.clintsPhone
           : clintsPhone // ignore: cast_nullable_to_non_nullable
               as String?,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       vehicle: vehicle == freezed
           ? _value.vehicle
           : vehicle // ignore: cast_nullable_to_non_nullable
@@ -171,6 +180,7 @@ abstract class _$DealCopyWith<$Res> implements $DealCopyWith<$Res> {
       num? discount,
       String? clientsName,
       String? clintsPhone,
+      DateTime? createdAt,
       String? vehicle});
 }
 
@@ -194,6 +204,7 @@ class __$DealCopyWithImpl<$Res> extends _$DealCopyWithImpl<$Res>
     Object? discount = freezed,
     Object? clientsName = freezed,
     Object? clintsPhone = freezed,
+    Object? createdAt = freezed,
     Object? vehicle = freezed,
   }) {
     return _then(_Deal(
@@ -233,6 +244,10 @@ class __$DealCopyWithImpl<$Res> extends _$DealCopyWithImpl<$Res>
           ? _value.clintsPhone
           : clintsPhone // ignore: cast_nullable_to_non_nullable
               as String?,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       vehicle: vehicle == freezed
           ? _value.vehicle
           : vehicle // ignore: cast_nullable_to_non_nullable
@@ -254,6 +269,7 @@ class _$_Deal extends _Deal {
       this.discount,
       this.clientsName,
       this.clintsPhone,
+      this.createdAt,
       this.vehicle})
       : super._();
 
@@ -285,11 +301,13 @@ class _$_Deal extends _Deal {
   @override
   final String? clintsPhone;
   @override
+  final DateTime? createdAt;
+  @override
   final String? vehicle;
 
   @override
   String toString() {
-    return 'Deal(id: $id, name: $name, works: $works, directCosts: $directCosts, description: $description, status: $status, discount: $discount, clientsName: $clientsName, clintsPhone: $clintsPhone, vehicle: $vehicle)';
+    return 'Deal(id: $id, name: $name, works: $works, directCosts: $directCosts, description: $description, status: $status, discount: $discount, clientsName: $clientsName, clintsPhone: $clintsPhone, createdAt: $createdAt, vehicle: $vehicle)';
   }
 
   @override
@@ -319,6 +337,9 @@ class _$_Deal extends _Deal {
             (identical(other.clintsPhone, clintsPhone) ||
                 const DeepCollectionEquality()
                     .equals(other.clintsPhone, clintsPhone)) &&
+            (identical(other.createdAt, createdAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdAt, createdAt)) &&
             (identical(other.vehicle, vehicle) ||
                 const DeepCollectionEquality().equals(other.vehicle, vehicle)));
   }
@@ -335,6 +356,7 @@ class _$_Deal extends _Deal {
       const DeepCollectionEquality().hash(discount) ^
       const DeepCollectionEquality().hash(clientsName) ^
       const DeepCollectionEquality().hash(clintsPhone) ^
+      const DeepCollectionEquality().hash(createdAt) ^
       const DeepCollectionEquality().hash(vehicle);
 
   @JsonKey(ignore: true)
@@ -359,6 +381,7 @@ abstract class _Deal extends Deal {
       num? discount,
       String? clientsName,
       String? clintsPhone,
+      DateTime? createdAt,
       String? vehicle}) = _$_Deal;
   const _Deal._() : super._();
 
@@ -384,6 +407,8 @@ abstract class _Deal extends Deal {
   String? get clientsName => throw _privateConstructorUsedError;
   @override
   String? get clintsPhone => throw _privateConstructorUsedError;
+  @override
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   @override
   String? get vehicle => throw _privateConstructorUsedError;
   @override

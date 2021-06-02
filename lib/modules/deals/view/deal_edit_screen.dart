@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/deal.dart';
 import '../models/work.dart';
+import '../models/direct_cost.dart';
 import '../providers/deals_provider.dart';
 import '../../../common/widgets/price_tag.dart';
 import 'status_tag.dart';
@@ -28,6 +29,7 @@ class DealEditScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     final Deal newDeal = watch(tempDealProvider).state;
+    final bool hasChanges = watch(tempDealProvider).state != deal;
 
     void _editCar(BuildContext context) async {
       final String? newCar = await showDialog<String?>(
@@ -102,6 +104,19 @@ class DealEditScreen extends ConsumerWidget {
       }
     }
 
+    void _addDirectCost(BuildContext context) async {
+      final DirectCost? newCost = await showDialog<DirectCost?>(
+          context: context, builder: (context) => EditDirectCostDialog());
+      if (newCost != null) {
+        List<DirectCost> _newCosts = List.from(newDeal.directCosts)
+          ..add(newCost);
+
+        context.read(tempDealProvider).state = newDeal.copyWith(
+          directCosts: _newCosts,
+        );
+      }
+    }
+
     void _editWork(
       BuildContext context,
       Work work,
@@ -124,6 +139,27 @@ class DealEditScreen extends ConsumerWidget {
       }
     }
 
+    void _editDirectCost(
+      BuildContext context,
+      DirectCost directCost,
+    ) async {
+      final DirectCost? newCost = await showDialog<DirectCost>(
+          context: context,
+          builder: (context) => EditDirectCostDialog(
+                cost: directCost,
+              ));
+      if (newCost != null) {
+        List<DirectCost> _newCosts = [
+          for (final DirectCost _cost in newDeal.directCosts)
+            if (_cost == directCost) newCost else _cost
+        ];
+
+        context.read(tempDealProvider).state = newDeal.copyWith(
+          directCosts: _newCosts,
+        );
+      }
+    }
+
     void _deleteWork(Work work) {
       List<Work> _newWorks = List.from(newDeal.works)..remove(work);
 
@@ -133,9 +169,38 @@ class DealEditScreen extends ConsumerWidget {
       );
     }
 
+    void _deleteDirectCost(DirectCost cost) {
+      List<DirectCost> _newCosts = List.from(newDeal.directCosts)..remove(cost);
+
+      context.read(tempDealProvider).state = newDeal.copyWith(
+        directCosts: _newCosts,
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(newDeal.vehicle ?? 'Авто не указан'),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                child: Text('Отмена'),
+                onPressed: () => Navigator.pop(context),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              if (hasChanges)
+                ElevatedButton(
+                    onPressed: () => _save(context, newDeal),
+                    child: Text('Сохранить')),
+            ],
+          ),
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -159,6 +224,7 @@ class DealEditScreen extends ConsumerWidget {
                             icon: Icon(Icons.edit_outlined)),
                       ],
                     )),
+                MarginResult(deal: newDeal),
                 SizedBox(
                   height: 20,
                 ),
@@ -295,9 +361,38 @@ class DealEditScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-                ElevatedButton(
-                    onPressed: () => _save(context, newDeal),
-                    child: Text('Сохранить')),
+                SizedBox(
+                  height: 20,
+                ),
+                Section(
+                  title: 'Расходы',
+                  content: Column(
+                    children: [
+                      ...List.generate(
+                          newDeal.directCosts.length,
+                          (i) => DirectCostTile(
+                                directCost: newDeal.directCosts[i],
+                                deleteCost: _deleteDirectCost,
+                                editCost: _editDirectCost,
+                              )),
+                      TextButton.icon(
+                          onPressed: () => _addDirectCost(context),
+                          icon: Icon(Icons.add),
+                          label: Text('Добавить')),
+                      Divider(),
+                      Row(
+                        children: [
+                          Text('ИТОГО РАСХОДЫ'),
+                          Spacer(),
+                          PriceTag(
+                            price: newDeal.fullDirectCost,
+                            fontSize: 18,
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -339,6 +434,38 @@ class WorkTile extends StatelessWidget {
   }
 }
 
+class DirectCostTile extends StatelessWidget {
+  final DirectCost directCost;
+  final Function editCost;
+  final Function deleteCost;
+
+  const DirectCostTile(
+      {Key? key,
+      required this.directCost,
+      required this.editCost,
+      required this.deleteCost})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(child: Text(directCost.name)),
+        PriceTag(
+          price: directCost.price,
+        ),
+        IconButton(
+          onPressed: () => editCost(context, directCost),
+          icon: Icon(Icons.edit_outlined),
+        ),
+        IconButton(
+          onPressed: () => deleteCost(directCost),
+          icon: Icon(Icons.delete_outline),
+        ),
+      ],
+    );
+  }
+}
+
 class EditWorkDialog extends StatefulWidget {
   final Work? work;
 
@@ -369,7 +496,7 @@ class _EditWorkDialogState extends State<EditWorkDialog> {
     super.dispose();
   }
 
-  void _saveWork() {
+  void _saveCost() {
     final Work work = Work(
         name: _nameController.text,
         price: double.tryParse(_priceController.text)!);
@@ -384,6 +511,66 @@ class _EditWorkDialogState extends State<EditWorkDialog> {
         children: [
           TextField(
             decoration: InputDecoration(labelText: 'Название услуги'),
+            controller: _nameController,
+          ),
+          TextField(
+            decoration: InputDecoration(labelText: 'Цена'),
+            controller: _priceController,
+          ),
+        ],
+      ),
+      actions: [
+        ElevatedButton(onPressed: () => _saveCost(), child: Text('Сохранить')),
+      ],
+    );
+  }
+}
+
+class EditDirectCostDialog extends StatefulWidget {
+  final DirectCost? cost;
+
+  const EditDirectCostDialog({Key? key, this.cost}) : super(key: key);
+  @override
+  _EditDirectCostDialogState createState() => _EditDirectCostDialogState();
+}
+
+class _EditDirectCostDialogState extends State<EditDirectCostDialog> {
+  late TextEditingController _nameController;
+  late TextEditingController _priceController;
+
+  @override
+  void initState() {
+    _nameController = TextEditingController();
+    _priceController = TextEditingController();
+    if (widget.cost != null) {
+      _nameController.text = widget.cost!.name;
+      _priceController.text = widget.cost!.price.toString();
+    }
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _priceController.dispose();
+    super.dispose();
+  }
+
+  void _saveWork() {
+    final DirectCost cost = DirectCost(
+        name: _nameController.text,
+        price: double.tryParse(_priceController.text)!);
+    Navigator.pop(context, cost);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            decoration: InputDecoration(labelText: 'Название расхода'),
             controller: _nameController,
           ),
           TextField(
@@ -482,6 +669,62 @@ class _SectionState extends State<Section> with SingleTickerProviderStateMixin {
           ),
         ),
       ],
+    );
+  }
+}
+
+class MarginResult extends StatelessWidget {
+  final Deal deal;
+  const MarginResult({Key? key, required this.deal}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final double margin = deal.fullCost - deal.fullDirectCost;
+    Widget _tile(String name, double value) {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              name,
+              style: Theme.of(context).textTheme.caption,
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            PriceTag(price: value),
+          ],
+        ),
+      );
+    }
+
+    return Section(
+      title: 'Доход',
+      content: Row(
+        children: [
+          Expanded(
+            child: _tile('Выручка', deal.fullCost),
+          ),
+          Container(
+            height: 45,
+            width: 1,
+            color: Colors.black38,
+          ),
+          Expanded(
+            child: _tile('Расходы', deal.fullDirectCost),
+          ),
+          Expanded(
+            child: Material(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
+                color: margin.isNegative ? Colors.red[100] : Colors.green[100],
+                child: _tile('Доход', margin)),
+          ),
+        ],
+      ),
     );
   }
 }

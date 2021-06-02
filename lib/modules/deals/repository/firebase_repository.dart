@@ -5,9 +5,8 @@ import '../models/deal.dart';
 class DealsFirebaseRepository {
   final ref = FirebaseFirestore.instance.collection('deals');
 
- Map<String, dynamic>
-      _fbJson<T extends DocumentSnapshot<Map<String, dynamic>>>(T snapShop)  {
-        
+  Map<String, dynamic>
+      _fbJson<T extends DocumentSnapshot<Map<String, dynamic>>>(T snapShop) {
     return snapShop.data()!..addAll({'id': snapShop.id});
   }
 
@@ -15,14 +14,16 @@ class DealsFirebaseRepository {
     final querySnap = await ref.get();
     final snap = querySnap.docs;
     final result = snap.map((e) {
-     
-      return Deal.fromJson( _fbJson(e));
-    }).toList();
+      return Deal.fromJson(_fbJson(e));
+    }).toList()
+      ..sort((a, b) => (b.createdAt ?? DateTime(1900))
+          .compareTo(a.createdAt ?? DateTime(1900)));
     return result;
   }
 
   Future<Deal> add(Deal deal) async {
-    final docRef = await ref.add(deal.toJson());
+    final docRef =
+        await ref.add(deal.copyWith(createdAt: DateTime.now()).toJson());
     final docSnap = await docRef.get();
     return Deal.fromJson(_fbJson(docSnap));
   }

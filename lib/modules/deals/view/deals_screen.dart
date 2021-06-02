@@ -10,6 +10,26 @@ class DealsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: SafeArea(
+                  child: Column(
+            children: [
+              ListTile(
+                leading: Icon(
+                  Icons.shopping_cart_outlined,
+                ),
+                title: Text('Сделки'),
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.money_outlined,
+                ),
+                title: Text('Кассы'),
+              ),
+            ],
+          ),
+        ),
+      ),
       appBar: AppBar(
         title: Text('Сделки'),
       ),
@@ -45,70 +65,10 @@ class DealsScreen extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => DealEditScreen(
-                          Deal(description: ''),
+                          Deal(description: '', createdAt: DateTime.now()),
                           isNew: true,
                         )));
           }),
-    );
-  }
-}
-
-class NewDealDialog extends StatefulWidget {
-  const NewDealDialog({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  _NewDealDialogState createState() => _NewDealDialogState();
-}
-
-class _NewDealDialogState extends State<NewDealDialog> {
-  late TextEditingController _descriptionController;
-  late TextEditingController _vehicleController;
-
-  @override
-  void initState() {
-    _descriptionController = TextEditingController();
-    _vehicleController = TextEditingController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _descriptionController.dispose();
-    _vehicleController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text('Автомобиль'),
-          TextField(
-            controller: _vehicleController,
-            autofocus: true,
-          ),
-          Text('Что делаем?'),
-          TextField(
-            controller: _descriptionController,
-            autofocus: true,
-          ),
-        ],
-      ),
-      actions: [
-        TextButton(
-          child: Text('OK'),
-          onPressed: () => Navigator.pop(
-              context,
-              Deal(
-                description: _descriptionController.text,
-                vehicle: _vehicleController.text,
-              )),
-        )
-      ],
     );
   }
 }
