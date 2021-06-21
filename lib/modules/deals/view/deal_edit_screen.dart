@@ -6,12 +6,33 @@ import '../models/work.dart';
 import '../models/direct_cost.dart';
 import '../providers/deals_provider.dart';
 import '../../../common/widgets/price_tag.dart';
+import '../../../common/widgets/edit_string_dialog.dart';
 import 'status_tag.dart';
+
+class DealEditScreenArgs {
+  final bool isNew;
+  final Deal deal;
+
+  DealEditScreenArgs(this.deal, {this.isNew = false});
+}
+
+class DealEditScreenRoute extends StatelessWidget {
+  static const String route = '/dealEditScreen';
+  const DealEditScreenRoute({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final DealEditScreenArgs args = ModalRoute.of(context)!.settings.arguments as DealEditScreenArgs;
+    return DealEditScreen(
+      args.deal, isNew: args.isNew,
+    );
+  }
+}
 
 class DealEditScreen extends ConsumerWidget {
   final bool isNew;
   final Deal deal;
-  final tempDealProvider;
+  final StateProvider<Deal> tempDealProvider;
   DealEditScreen(this.deal, {this.isNew = false})
       : tempDealProvider = StateProvider<Deal>((ref) {
           return deal.copyWith();
@@ -586,51 +607,7 @@ class _EditDirectCostDialogState extends State<EditDirectCostDialog> {
   }
 }
 
-class EditStringDialog extends StatefulWidget {
-  final String label;
-  final String? initialValue;
 
-  const EditStringDialog({Key? key, required this.label, this.initialValue})
-      : super(key: key);
-  @override
-  _EditStringDialogState createState() => _EditStringDialogState();
-}
-
-class _EditStringDialogState extends State<EditStringDialog> {
-  late TextEditingController _controller;
-
-  @override
-  void initState() {
-    _controller = TextEditingController();
-    _controller.text = widget.initialValue ?? '';
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void _save() {
-    final String newValue = _controller.text;
-    Navigator.pop(context, newValue.isEmpty ? null : newValue);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      content: TextField(
-        autofocus: true,
-        decoration: InputDecoration(labelText: widget.label),
-        controller: _controller,
-      ),
-      actions: [
-        ElevatedButton(onPressed: () => _save(), child: Text('Сохранить')),
-      ],
-    );
-  }
-}
 
 class Section extends StatefulWidget {
   final String title;

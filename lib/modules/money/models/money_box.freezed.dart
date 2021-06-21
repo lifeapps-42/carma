@@ -20,8 +20,9 @@ MoneyBox _$MoneyBoxFromJson(Map<String, dynamic> json) {
 class _$MoneyBoxTearOff {
   const _$MoneyBoxTearOff();
 
-  _MoneyBox call({double balance = 0}) {
+  _MoneyBox call({required String name, double balance = 0}) {
     return _MoneyBox(
+      name: name,
       balance: balance,
     );
   }
@@ -36,6 +37,7 @@ const $MoneyBox = _$MoneyBoxTearOff();
 
 /// @nodoc
 mixin _$MoneyBox {
+  String get name => throw _privateConstructorUsedError;
   double get balance => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,7 +50,7 @@ mixin _$MoneyBox {
 abstract class $MoneyBoxCopyWith<$Res> {
   factory $MoneyBoxCopyWith(MoneyBox value, $Res Function(MoneyBox) then) =
       _$MoneyBoxCopyWithImpl<$Res>;
-  $Res call({double balance});
+  $Res call({String name, double balance});
 }
 
 /// @nodoc
@@ -61,9 +63,14 @@ class _$MoneyBoxCopyWithImpl<$Res> implements $MoneyBoxCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? name = freezed,
     Object? balance = freezed,
   }) {
     return _then(_value.copyWith(
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
       balance: balance == freezed
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
@@ -77,7 +84,7 @@ abstract class _$MoneyBoxCopyWith<$Res> implements $MoneyBoxCopyWith<$Res> {
   factory _$MoneyBoxCopyWith(_MoneyBox value, $Res Function(_MoneyBox) then) =
       __$MoneyBoxCopyWithImpl<$Res>;
   @override
-  $Res call({double balance});
+  $Res call({String name, double balance});
 }
 
 /// @nodoc
@@ -91,9 +98,14 @@ class __$MoneyBoxCopyWithImpl<$Res> extends _$MoneyBoxCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? name = freezed,
     Object? balance = freezed,
   }) {
     return _then(_MoneyBox(
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
       balance: balance == freezed
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
@@ -105,31 +117,37 @@ class __$MoneyBoxCopyWithImpl<$Res> extends _$MoneyBoxCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_MoneyBox extends _MoneyBox {
-  const _$_MoneyBox({this.balance = 0}) : super._();
+  const _$_MoneyBox({required this.name, this.balance = 0}) : super._();
 
   factory _$_MoneyBox.fromJson(Map<String, dynamic> json) =>
       _$_$_MoneyBoxFromJson(json);
 
+  @override
+  final String name;
   @JsonKey(defaultValue: 0)
   @override
   final double balance;
 
   @override
   String toString() {
-    return 'MoneyBox(balance: $balance)';
+    return 'MoneyBox(name: $name, balance: $balance)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _MoneyBox &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.balance, balance) ||
                 const DeepCollectionEquality().equals(other.balance, balance)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(balance);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(balance);
 
   @JsonKey(ignore: true)
   @override
@@ -143,11 +161,13 @@ class _$_MoneyBox extends _MoneyBox {
 }
 
 abstract class _MoneyBox extends MoneyBox {
-  const factory _MoneyBox({double balance}) = _$_MoneyBox;
+  const factory _MoneyBox({required String name, double balance}) = _$_MoneyBox;
   const _MoneyBox._() : super._();
 
   factory _MoneyBox.fromJson(Map<String, dynamic> json) = _$_MoneyBox.fromJson;
 
+  @override
+  String get name => throw _privateConstructorUsedError;
   @override
   double get balance => throw _privateConstructorUsedError;
   @override

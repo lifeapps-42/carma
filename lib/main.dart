@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'modules/deals/view/deals_screen.dart';
+import 'routes.dart';
 
 void main() {
   runApp(MyApp());
@@ -37,7 +37,12 @@ class _MyAppState extends State<MyApp> {
                   scaffoldBackgroundColor: Colors.blueGrey[50],
                   primarySwatch: Colors.blueGrey,
                 ),
-                home: DealsScreen(),
+              initialRoute: DealsScreen.route,
+              routes: {
+                DealsScreen.route: (context) => DealsScreen(),
+                DealEditScreenRoute.route: (context) => DealEditScreenRoute(),
+                MoneyBoxesScreen.route: (context) => MoneyBoxesScreen(),
+              },
               );
             }
             return CircularProgressIndicator();

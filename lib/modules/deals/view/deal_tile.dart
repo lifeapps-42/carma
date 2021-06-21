@@ -18,8 +18,7 @@ class DealTile extends ConsumerWidget {
     return Card(
       color: Colors.white,
       child: InkWell(
-        onTap: () => Navigator.push(context,
-            MaterialPageRoute(builder: (context) => DealEditScreen(deal))),
+        onTap: () => Navigator.pushNamed(context, DealEditScreenRoute.route, arguments: DealEditScreenArgs(deal)),
         child: Container(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -37,8 +36,12 @@ class DealTile extends ConsumerWidget {
                 Divider(),
                 Row(children: [
                   StatusTag(deal: deal),
-                  SizedBox(width: 10,),
-                  DateTag(date: deal.createdAt,),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  DateTag(
+                    date: deal.createdAt,
+                  ),
                   Spacer(),
                   PriceTag(
                     price: deal.fullCost,

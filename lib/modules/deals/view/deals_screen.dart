@@ -5,31 +5,14 @@ import '../providers/deals_provider.dart';
 import '../models/deal.dart';
 import 'deal_tile.dart';
 import 'deal_edit_screen.dart';
+import '../../../common/widgets/main_drawer.dart';
 
 class DealsScreen extends StatelessWidget {
+  static const String route = '/dealsScreen';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: SafeArea(
-                  child: Column(
-            children: [
-              ListTile(
-                leading: Icon(
-                  Icons.shopping_cart_outlined,
-                ),
-                title: Text('Сделки'),
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.money_outlined,
-                ),
-                title: Text('Кассы'),
-              ),
-            ],
-          ),
-        ),
-      ),
+      drawer: MainDrawer(),
       appBar: AppBar(
         title: Text('Сделки'),
       ),
@@ -61,13 +44,10 @@ class DealsScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => DealEditScreen(
-                          Deal(description: '', createdAt: DateTime.now()),
-                          isNew: true,
-                        )));
+            Navigator.pushNamed(context, DealEditScreenRoute.route,
+                arguments: DealEditScreenArgs(
+                    Deal(description: '', createdAt: DateTime.now()),
+                    isNew: true));
           }),
     );
   }

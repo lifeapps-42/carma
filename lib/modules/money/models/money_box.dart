@@ -10,6 +10,7 @@ abstract class MoneyBox with _$MoneyBox{
   const MoneyBox._();
   
   const factory MoneyBox({
+    required String name,
     @Default(0) double balance,
   }) = _MoneyBox;
 
